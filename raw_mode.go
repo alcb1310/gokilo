@@ -20,13 +20,13 @@ func enableRawMode() (func(), error) {
 	termios.Oflag &^= unix.OPOST
 
 	if err := unix.IoctlSetTermios(unix.Stdin, unix.TCSETS, termios); err != nil {
-		fmt.Fprintf(os.Stderr, "Error setting terminal attributes: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error setting terminal attributes: %v\r\n", err)
 		return nil, err
 	}
 
 	return func() {
 		if err := unix.IoctlSetTermios(unix.Stdin, unix.TCSETS, &orig_termios); err != nil {
-			fmt.Fprintf(os.Stderr, "Error restoring terminal attributes: %v\n", err)
+			fmt.Fprintf(os.Stderr, "Error restoring terminal attributes: %v\r\n", err)
 			os.Exit(1)
 		}
 

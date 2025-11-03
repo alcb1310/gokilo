@@ -9,7 +9,7 @@ import (
 func main() {
 	safe, err := enableRawMode()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error enabling raw mode: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error enabling raw mode: %v\r\n", err)
 		os.Exit(1)
 	}
 	defer safe()
@@ -19,14 +19,14 @@ func main() {
 	for {
 		b, err := reader.ReadByte()
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error reading input: %v\n", err)
+			fmt.Fprintf(os.Stderr, "Error reading input: %v\r\n", err)
 			os.Exit(1)
 		}
 
 		if isCtrl(b) {
-			fmt.Fprintf(os.Stdout, "%d\n", b)
+			fmt.Fprintf(os.Stdout, "%d\r\n", b)
 		} else {
-			fmt.Fprintf(os.Stdout, "%d ('%c')\n", b, b)
+			fmt.Fprintf(os.Stdout, "%d ('%c')\r\n", b, b)
 		}
 
 		if b == 'q' {
