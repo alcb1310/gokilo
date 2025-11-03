@@ -9,7 +9,6 @@ func (e *EditorConfig) editorRefreshScreen() {
 	ab := NewAppendBuffer()
 
 	ab.Append([]byte("\x1b[?25l"), 6)
-	ab.Append([]byte("\x1b[2J"), 4)
 	ab.Append([]byte("\x1b[H"), 3)
 
 	e.editorDrawRows(ab)
@@ -26,6 +25,7 @@ func (e *EditorConfig) editorDrawRows(ab *AppendBuffer) {
 	for y = 0; y < e.term.ws.Row; y++ {
 		ab.Append([]byte("~"), 1)
 
+		ab.Append([]byte("\x1b[K"), 3)
 		if y < e.term.ws.Row-1 {
 			ab.Append([]byte("\r\n"), 2)
 		}
