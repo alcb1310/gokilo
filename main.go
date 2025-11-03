@@ -5,35 +5,35 @@ import (
 	"os"
 )
 
-type Global struct {
-	f func()
+type EditorConfig struct {
+	exitFunction func()
 }
 
-var E Global
+var E EditorConfig
 
-func (g *Global) safeExit(err error) {
+func (g *EditorConfig) safeExit(err error) {
 	fmt.Fprintf(os.Stdout, "\x1b[2J")
 	fmt.Fprintf(os.Stdout, "\x1b[H")
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\r\n", err)
 	}
-	if g.f != nil {
-		g.f()
+	if g.exitFunction != nil {
+		g.exitFunction()
 	}
 	os.Exit(0)
 }
 
 func initEditor() {
-	E = Global{
-		f: nil,
+	E = EditorConfig{
+		exitFunction: nil,
 	}
 }
 
 func main() {
 	initEditor()
 	var err error
-	E.f, err = enableRawMode()
+	E.exitFunction, err = enableRawMode()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error enabling raw mode: %v\r\n", err)
 		defer E.safeExit(err)
