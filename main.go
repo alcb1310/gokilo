@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 )
 
@@ -25,7 +26,20 @@ func (g *EditorConfig) safeExit(err error) {
 	os.Exit(0)
 }
 
-func initEditor() {
+func init() {
+	var f *os.File
+	var err error
+	userTempDir, _ := os.UserConfigDir()
+	if f, err = createLoggerFile(userTempDir); err != nil {
+		E.safeExit(err)
+	}
+
+	handlerOptions := &slog.HandlerOptions{}
+	handlerOptions.Level = slog.LevelDebug
+
+	loggerHandler := slog.NewTextHandler(f, handlerOptions)
+	slog.SetDefault(slog.New(loggerHandler))
+
 	E = EditorConfig{
 		exitFunction: nil,
 		term:         NewTerminal(),
@@ -33,7 +47,6 @@ func initEditor() {
 }
 
 func main() {
-	initEditor()
 	var err error
 	E.exitFunction, err = enableRawMode()
 	if err != nil {
