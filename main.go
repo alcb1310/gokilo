@@ -6,6 +6,10 @@ import (
 	"os"
 )
 
+const (
+	KILO_VERSION = "0.0.1"
+)
+
 type EditorConfig struct {
 	exitFunction func()
 	term         *terminal
