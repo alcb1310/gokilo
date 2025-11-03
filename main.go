@@ -29,7 +29,7 @@ func main() {
 			fmt.Fprintf(os.Stdout, "%d ('%c')\r\n", b, b)
 		}
 
-		if b == 'q' {
+		if b == ctrlKey('q') {
 			break
 		}
 	}
@@ -37,4 +37,8 @@ func main() {
 
 func isCtrl(b byte) bool {
 	return b <= 0x1f || b == 0x7f
+}
+
+func ctrlKey(b byte) byte {
+	return b & 0x1f
 }
