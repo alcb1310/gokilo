@@ -6,22 +6,25 @@ import (
 )
 
 func (e *EditorConfig) editorRefreshScreen() {
-	fmt.Fprintf(os.Stdout, "\x1b[2J")
-	fmt.Fprintf(os.Stdout, "\x1b[H")
+	ab := NewAppendBuffer()
+	ab.Append([]byte("\x1b[2J"), 4)
+	ab.Append([]byte("\x1b[H"), 3)
 
-	e.editorDrawRows()
+	e.editorDrawRows(ab)
 
-	fmt.Fprintf(os.Stdout, "\x1b[H")
+	ab.Append([]byte("\x1b[H"), 3)
+
+	fmt.Fprintf(os.Stdout, "%s", ab.b)
 }
 
-func (e *EditorConfig) editorDrawRows() {
+func (e *EditorConfig) editorDrawRows(ab *AppendBuffer) {
 	var y uint16
 
 	for y = 0; y < e.term.ws.Row; y++ {
-		fmt.Fprintf(os.Stdout, "~")
+		ab.Append([]byte("~"), 1)
 
 		if y < e.term.ws.Row-1 {
-			fmt.Fprintf(os.Stdout, "\r\n")
+			ab.Append([]byte("\r\n"), 2)
 		}
 	}
 }
