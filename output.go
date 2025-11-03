@@ -7,12 +7,15 @@ import (
 
 func (e *EditorConfig) editorRefreshScreen() {
 	ab := NewAppendBuffer()
+
+	ab.Append([]byte("\x1b[?25l"), 6)
 	ab.Append([]byte("\x1b[2J"), 4)
 	ab.Append([]byte("\x1b[H"), 3)
 
 	e.editorDrawRows(ab)
 
 	ab.Append([]byte("\x1b[H"), 3)
+	ab.Append([]byte("\x1b[?25h"), 6)
 
 	fmt.Fprintf(os.Stdout, "%s", ab.b)
 }
