@@ -7,11 +7,12 @@ import (
 )
 
 func main() {
-	err := enableRawMode()
+	safe, err := enableRawMode()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error enabling raw mode: %v\n", err)
 		os.Exit(1)
 	}
+	defer safe()
 
 	reader := bufio.NewReader(os.Stdin)
 
