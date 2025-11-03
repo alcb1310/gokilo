@@ -15,8 +15,13 @@ func (e *EditorConfig) editorRefreshScreen() {
 }
 
 func (e *EditorConfig) editorDrawRows() {
-	fmt.Fprintf(os.Stdout, "Rows %d\r\n", e.term.ws.Row)
-	for range e.term.ws.Row {
-		fmt.Fprintf(os.Stdout, "~\r\n")
+	var y uint16
+
+	for y = 0; y < e.term.ws.Row; y++ {
+		fmt.Fprintf(os.Stdout, "~")
+
+		if y < e.term.ws.Row-1 {
+			fmt.Fprintf(os.Stdout, "\r\n")
+		}
 	}
 }

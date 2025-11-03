@@ -30,5 +30,4 @@ func (e *EditorConfig) editorProcessKeypress() {
 		E.safeExit(nil)
 		os.Exit(0)
 	}
-
 }
