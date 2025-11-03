@@ -23,8 +23,18 @@ func main() {
 			os.Exit(1)
 		}
 
+		if isCtrl(b) {
+			fmt.Fprintf(os.Stdout, "%d\n", b)
+		} else {
+			fmt.Fprintf(os.Stdout, "%d ('%c')\n", b, b)
+		}
+
 		if b == 'q' {
 			break
 		}
 	}
+}
+
+func isCtrl(b byte) bool {
+	return b <= 0x1f || b == 0x7f
 }
