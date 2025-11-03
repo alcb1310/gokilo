@@ -17,8 +17,8 @@ func ctrlKey(b byte) byte {
 // it's job is to wait for one keypress and return it.
 //
 // @returns false when the user wants to exit
-func editorProcessKeypress(t *terminal) {
-	c, err := t.editorReadKey()
+func (e *EditorConfig) editorProcessKeypress() {
+	c, err := e.term.editorReadKey()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error reading input: %v\r\n", err)
 		E.safeExit(err)

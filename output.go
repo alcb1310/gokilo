@@ -5,17 +5,18 @@ import (
 	"os"
 )
 
-func editorRefreshScreen() {
+func (e *EditorConfig) editorRefreshScreen() {
 	fmt.Fprintf(os.Stdout, "\x1b[2J")
 	fmt.Fprintf(os.Stdout, "\x1b[H")
 
-	editorDrawRows()
+	e.editorDrawRows()
 
 	fmt.Fprintf(os.Stdout, "\x1b[H")
 }
 
-func editorDrawRows() {
-	for range 24 {
+func (e *EditorConfig) editorDrawRows() {
+	fmt.Fprintf(os.Stdout, "Rows %d\r\n", e.term.ws.Row)
+	for range e.term.ws.Row {
 		fmt.Fprintf(os.Stdout, "~\r\n")
 	}
 }

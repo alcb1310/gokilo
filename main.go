@@ -7,6 +7,7 @@ import (
 
 type EditorConfig struct {
 	exitFunction func()
+	term         *terminal
 }
 
 var E EditorConfig
@@ -27,6 +28,7 @@ func (g *EditorConfig) safeExit(err error) {
 func initEditor() {
 	E = EditorConfig{
 		exitFunction: nil,
+		term:         NewTerminal(),
 	}
 }
 
@@ -40,10 +42,8 @@ func main() {
 	}
 	defer E.safeExit(nil)
 
-	term := NewTerminal()
-
 	for {
-		editorRefreshScreen()
-		editorProcessKeypress(term)
+		E.editorRefreshScreen()
+		E.editorProcessKeypress()
 	}
 }
