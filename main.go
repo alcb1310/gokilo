@@ -12,6 +12,9 @@ type Global struct {
 var E Global
 
 func (g *Global) safeExit(err error) {
+	fmt.Fprintf(os.Stdout, "\x1b[2J")
+	fmt.Fprintf(os.Stdout, "\x1b[H")
+
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\r\n", err)
 	}
