@@ -15,7 +15,7 @@ func enableRawMode() (func(), error) {
 	}
 	orig_termios := *termios
 
-	termios.Lflag &^= unix.ECHO | unix.ICANON
+	termios.Lflag &^= unix.ECHO | unix.ICANON | unix.ISIG
 
 	if err := unix.IoctlSetTermios(unix.Stdin, unix.TCSETS, termios); err != nil {
 		fmt.Fprintf(os.Stderr, "Error setting terminal attributes: %v\n", err)
