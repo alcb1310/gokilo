@@ -1,0 +1,34 @@
+package main
+
+import (
+	"fmt"
+	"os"
+)
+
+func isCtrl(b byte) bool {
+	return b <= 0x1f || b == 0x7f
+}
+
+func ctrlKey(b byte) byte {
+	return b & 0x1f
+}
+
+// editorProcessKeypress processes a single keypress from the terminal
+// it's job is to wait for one keypress and return it.
+//
+// @returns false when the user wants to exit
+func editorProcessKeypress(t *terminal) {
+	c, err := t.editorReadKey()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error reading input: %v\r\n", err)
+		E.safeExit(err)
+		os.Exit(1)
+	}
+
+	switch c {
+	case ctrlKey('q'):
+		E.safeExit(nil)
+		os.Exit(0)
+	}
+
+}
