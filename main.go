@@ -40,6 +40,7 @@ func main() {
 	term := NewTerminal()
 
 	for {
+		editorRefreshScreen()
 		editorProcessKeypress(term)
 	}
 }
