@@ -37,18 +37,21 @@ func (e *EditorConfig) editorProcessKeypress() {
 func editorMoveCursor(key int) {
 	switch key {
 	case ARROW_LEFT:
-		if E.cx == 0 {
-			return
+		if E.cx != 0 {
+			E.cx--
 		}
-		E.cx--
 	case ARROW_DOWN:
-		E.cy++
-	case ARROW_UP:
-		if E.cy == 0 {
-			return
+		if E.cy != E.term.ws.Row-1 {
+			E.cy++
 		}
-		E.cy--
+	case ARROW_UP:
+		if E.cy != 0 {
+			E.cy--
+		}
 	case ARROW_RIGHT:
-		E.cx++
+		if E.cx != E.term.ws.Col-1 {
+
+			E.cx++
+		}
 	}
 }
