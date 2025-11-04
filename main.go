@@ -11,6 +11,7 @@ const (
 )
 
 type EditorConfig struct {
+	cx, cy       uint16
 	exitFunction func()
 	term         *terminal
 }
@@ -47,6 +48,8 @@ func init() {
 	E = EditorConfig{
 		exitFunction: nil,
 		term:         NewTerminal(),
+		cx:           0,
+		cy:           0,
 	}
 }
 

@@ -13,7 +13,10 @@ func (e *EditorConfig) editorRefreshScreen() {
 
 	e.editorDrawRows(ab)
 
-	ab.Append([]byte("\x1b[H"), 3)
+	msg := fmt.Sprintf("\x1b[%d;%dH", e.cy+1, e.cx+1)
+	msglen := len(msg)
+	ab.Append([]byte(msg), msglen)
+
 	ab.Append([]byte("\x1b[?25h"), 6)
 
 	fmt.Fprintf(os.Stdout, "%s", ab.b)
