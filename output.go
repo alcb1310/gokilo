@@ -6,6 +6,7 @@ import (
 )
 
 func (e *EditorConfig) editorRefreshScreen() {
+	e.editorScroll()
 	ab := NewAppendBuffer()
 
 	ab.Append([]byte("\x1b[?25l"), 6)
@@ -13,7 +14,7 @@ func (e *EditorConfig) editorRefreshScreen() {
 
 	e.editorDrawRows(ab)
 
-	msg := fmt.Sprintf("\x1b[%d;%dH", e.cy+1, e.cx+1)
+	msg := fmt.Sprintf("\x1b[%d;%dH", (e.cy-e.rowoff)+1, e.cx+1)
 	msglen := len(msg)
 	ab.Append([]byte(msg), msglen)
 
@@ -27,8 +28,9 @@ func (e *EditorConfig) editorDrawRows(ab *AppendBuffer) {
 
 	for y = 0; y < e.term.ws.Row; y++ {
 		ab.Append([]byte("\x1b[K"), 3)
+		filerow := y + e.rowoff
 
-		if y >= uint16(e.numrows) {
+		if filerow >= e.numrows {
 			if e.numrows == 0 && y == e.term.ws.Row/3 {
 				welcome := fmt.Sprintf("Kilo editor -- version %s", KILO_VERSION)
 				welcomelen := (uint16)(len(welcome))
@@ -52,12 +54,21 @@ func (e *EditorConfig) editorDrawRows(ab *AppendBuffer) {
 				ab.Append([]byte("~"), 1)
 			}
 		} else {
-			len := min(e.rows[y].size, (int)(e.term.ws.Col))
-			ab.Append(e.rows[y].chars[:len], len)
+			len := min(e.rows[filerow].size, (int)(e.term.ws.Col))
+			ab.Append(e.rows[filerow].chars[:len], len)
 		}
 
 		if y < e.term.ws.Row-1 {
 			ab.Append([]byte("\r\n"), 2)
 		}
+	}
+}
+
+func (e *EditorConfig) editorScroll() {
+	if e.cy < e.rowoff {
+		e.rowoff = e.cy
+	}
+	if e.cy >= e.rowoff+e.term.ws.Row {
+		e.rowoff = e.cy - e.term.ws.Row + 1
 	}
 }

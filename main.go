@@ -29,7 +29,8 @@ type Erow struct {
 
 type EditorConfig struct {
 	cx, cy       uint16
-	numrows      int
+	rowoff       uint16
+	numrows      uint16
 	rows         []Erow
 	exitFunction func()
 	term         *terminal
@@ -71,6 +72,7 @@ func init() {
 		cy:           0,
 		numrows:      0,
 		rows:         make([]Erow, 0),
+		rowoff:       0,
 	}
 }
 
@@ -87,8 +89,6 @@ func main() {
 	if len(args) > 1 {
 		E.editorOpen(args[1])
 	}
-
-	slog.Debug("main", "rows", E.rows)
 
 	for {
 		E.editorRefreshScreen()

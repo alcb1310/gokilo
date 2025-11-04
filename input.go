@@ -5,9 +5,9 @@ import (
 	"os"
 )
 
-func isCtrl(b byte) bool {
-	return b <= 0x1f || b == 0x7f
-}
+// func isCtrl(b byte) bool {
+// 	return b <= 0x1f || b == 0x7f
+// }
 
 func ctrlKey(b int) int {
 	return b & 0x1f
@@ -54,7 +54,7 @@ func editorMoveCursor(key int) {
 			E.cx--
 		}
 	case ARROW_DOWN:
-		if E.cy != E.term.ws.Row-1 {
+		if E.cy < E.numrows {
 			E.cy++
 		}
 	case ARROW_UP:
