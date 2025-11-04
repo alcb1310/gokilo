@@ -26,6 +26,8 @@ func (e *EditorConfig) editorDrawRows(ab *AppendBuffer) {
 	var y uint16
 
 	for y = 0; y < e.term.ws.Row; y++ {
+		ab.Append([]byte("\x1b[K"), 3)
+
 		if y >= uint16(e.numrows) {
 			if e.numrows == 0 && y == e.term.ws.Row/3 {
 				welcome := fmt.Sprintf("Kilo editor -- version %s", KILO_VERSION)
@@ -50,11 +52,10 @@ func (e *EditorConfig) editorDrawRows(ab *AppendBuffer) {
 				ab.Append([]byte("~"), 1)
 			}
 		} else {
-			len := min(e.row.size, (int)(e.term.ws.Col))
-			ab.Append(e.row.chars[:len], len)
+			len := min(e.rows[y].size, (int)(e.term.ws.Col))
+			ab.Append(e.rows[y].chars[:len], len)
 		}
 
-		ab.Append([]byte("\x1b[K"), 3)
 		if y < e.term.ws.Row-1 {
 			ab.Append([]byte("\r\n"), 2)
 		}

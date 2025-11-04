@@ -17,9 +17,11 @@ func (e *EditorConfig) editorOpen(filename string) {
 
 	scanner := bufio.NewScanner(file)
 
-	scanner.Scan()
-	line := scanner.Bytes()
-	linelen := len(line)
+	for scanner.Scan() {
+		line := scanner.Bytes()
+		linelen := len(line)
+		e.editorAppendRow(line, linelen)
+	}
 
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintf(os.Stderr, "Error reading file: %v\r\n", err)
@@ -27,8 +29,4 @@ func (e *EditorConfig) editorOpen(filename string) {
 		os.Exit(1)
 	}
 
-	e.row.size = linelen
-	e.row.chars = make([]byte, linelen)
-	copy(e.row.chars, line)
-	e.numrows++
 }
