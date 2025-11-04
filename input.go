@@ -40,6 +40,10 @@ func (e *EditorConfig) editorProcessKeypress() {
 				editorMoveCursor(ARROW_DOWN)
 			}
 		}
+	case HOME_KEY:
+		E.cx = 0
+	case END_KEY:
+		E.cx = E.term.ws.Col - 1
 	}
 }
 

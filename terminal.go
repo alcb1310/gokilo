@@ -47,6 +47,10 @@ func (t *terminal) editorReadKey() (int, error) {
 					return '\x1b', nil
 				}
 				switch seq[1] {
+				case '1', '7':
+					return HOME_KEY, nil
+				case '4', '8':
+					return END_KEY, nil
 				case '5':
 					return PAGE_UP, nil
 				case '6':
@@ -62,7 +66,18 @@ func (t *terminal) editorReadKey() (int, error) {
 					return ARROW_RIGHT, nil
 				case 'D':
 					return ARROW_LEFT, nil
+				case 'H':
+					return HOME_KEY, nil
+				case 'F':
+					return END_KEY, nil
 				}
+			}
+		} else if seq[0] == 'O' {
+			switch seq[1] {
+			case 'H':
+				return HOME_KEY, nil
+			case 'F':
+				return END_KEY, nil
 			}
 		}
 
