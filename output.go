@@ -27,7 +27,7 @@ func (e *EditorConfig) editorDrawRows(ab *AppendBuffer) {
 
 	for y = 0; y < e.term.ws.Row; y++ {
 		if y >= uint16(e.numrows) {
-			if y == e.term.ws.Row/3 {
+			if e.numrows == 0 && y == e.term.ws.Row/3 {
 				welcome := fmt.Sprintf("Kilo editor -- version %s", KILO_VERSION)
 				welcomelen := (uint16)(len(welcome))
 				if welcomelen > e.term.ws.Col {
