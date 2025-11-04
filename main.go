@@ -82,7 +82,10 @@ func main() {
 	}
 	defer E.safeExit(nil)
 
-	E.editorOpen()
+	args := os.Args
+	if len(args) > 1 {
+		E.editorOpen(args[1])
+	}
 
 	for {
 		E.editorRefreshScreen()
