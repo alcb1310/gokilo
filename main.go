@@ -22,8 +22,15 @@ const (
 	PAGE_DOWN
 )
 
+type Erow struct {
+	chars []byte
+	size  int
+}
+
 type EditorConfig struct {
 	cx, cy       uint16
+	numrows      int
+	row          Erow
 	exitFunction func()
 	term         *terminal
 }
@@ -62,6 +69,7 @@ func init() {
 		term:         NewTerminal(),
 		cx:           0,
 		cy:           0,
+		numrows:      0,
 	}
 }
 
@@ -73,6 +81,8 @@ func main() {
 		defer E.safeExit(err)
 	}
 	defer E.safeExit(nil)
+
+	E.editorOpen()
 
 	for {
 		E.editorRefreshScreen()
