@@ -29,26 +29,26 @@ func (e *EditorConfig) editorProcessKeypress() {
 	case ctrlKey('q'):
 		E.safeExit(nil)
 		os.Exit(0)
-	case 'h', 'j', 'k', 'l':
+	case ARROW_UP, ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT:
 		editorMoveCursor(c)
 	}
 }
 
 func editorMoveCursor(key byte) {
 	switch key {
-	case 'h':
+	case ARROW_LEFT:
 		if E.cx == 0 {
 			return
 		}
 		E.cx--
-	case 'j':
+	case ARROW_DOWN:
 		E.cy++
-	case 'k':
+	case ARROW_UP:
 		if E.cy == 0 {
 			return
 		}
 		E.cy--
-	case 'l':
+	case ARROW_RIGHT:
 		E.cx++
 	}
 }

@@ -10,6 +10,13 @@ const (
 	KILO_VERSION = "0.0.1"
 )
 
+const (
+	ARROW_LEFT = iota + 127
+	ARROW_RIGHT
+	ARROW_UP
+	ARROW_DOWN
+)
+
 type EditorConfig struct {
 	cx, cy       uint16
 	exitFunction func()
