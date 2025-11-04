@@ -9,7 +9,7 @@ func isCtrl(b byte) bool {
 	return b <= 0x1f || b == 0x7f
 }
 
-func ctrlKey(b byte) byte {
+func ctrlKey(b int) int {
 	return b & 0x1f
 }
 
@@ -34,7 +34,7 @@ func (e *EditorConfig) editorProcessKeypress() {
 	}
 }
 
-func editorMoveCursor(key byte) {
+func editorMoveCursor(key int) {
 	switch key {
 	case ARROW_LEFT:
 		if E.cx == 0 {

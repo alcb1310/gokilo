@@ -22,7 +22,7 @@ func NewTerminal() *terminal {
 	return t
 }
 
-func (t *terminal) editorReadKey() (byte, error) {
+func (t *terminal) editorReadKey() (int, error) {
 	var ru rune
 	var err error
 
@@ -56,7 +56,7 @@ func (t *terminal) editorReadKey() (byte, error) {
 		return '\x1b', nil
 	}
 
-	return byte(ru), err
+	return int(ru), err
 }
 
 func (t *terminal) getWindowSize() (err error) {

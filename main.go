@@ -11,7 +11,7 @@ const (
 )
 
 const (
-	ARROW_LEFT = iota + 127
+	ARROW_LEFT = iota + 1000
 	ARROW_RIGHT
 	ARROW_UP
 	ARROW_DOWN
