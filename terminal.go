@@ -40,7 +40,8 @@ func (t *terminal) editorReadKey() (int, error) {
 			return '\x1b', nil
 		}
 
-		if seq[0] == '[' {
+		switch seq[0] {
+		case '[':
 			if seq[1] >= '0' && seq[1] <= '9' {
 				seq[2], size, err = t.reader.ReadRune()
 				if size == 0 || err != nil {
@@ -49,6 +50,8 @@ func (t *terminal) editorReadKey() (int, error) {
 				switch seq[1] {
 				case '1', '7':
 					return HOME_KEY, nil
+				case '3':
+					return DEL_KEY, nil
 				case '4', '8':
 					return END_KEY, nil
 				case '5':
@@ -72,7 +75,7 @@ func (t *terminal) editorReadKey() (int, error) {
 					return END_KEY, nil
 				}
 			}
-		} else if seq[0] == 'O' {
+		case 'O':
 			switch seq[1] {
 			case 'H':
 				return HOME_KEY, nil
