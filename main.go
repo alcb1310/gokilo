@@ -15,6 +15,8 @@ const (
 	ARROW_RIGHT
 	ARROW_UP
 	ARROW_DOWN
+	PAGE_UP
+	PAGE_DOWN
 )
 
 type EditorConfig struct {

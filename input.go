@@ -31,6 +31,15 @@ func (e *EditorConfig) editorProcessKeypress() {
 		os.Exit(0)
 	case ARROW_UP, ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT:
 		editorMoveCursor(c)
+	case PAGE_UP, PAGE_DOWN:
+		times := E.term.ws.Row
+		for ; times > 0; times-- {
+			if c == PAGE_UP {
+				editorMoveCursor(ARROW_UP)
+			} else {
+				editorMoveCursor(ARROW_DOWN)
+			}
+		}
 	}
 }
 
